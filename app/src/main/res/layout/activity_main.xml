@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+                name="mediaViewModel"
+                type="jeremypacabis.mlist.viewmodels.MediaListViewModel"/>
+    </data>
+
+    <FrameLayout
+            tools:context=".views.activities.MainActivity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/view_last_visited_on"
+                    android:text="@{mediaViewModel.lastVisitText}"
+                    android:visibility="@{mediaViewModel.showLastVisitText}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:id="@+id/last_visit_text"
+                    android:padding="4dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                    setAdapter="@{mediaViewModel.mediaItemAdapter}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/media_recycler_view"/>
+        </LinearLayout>
+
+        <androidx.core.widget.ContentLoadingProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:id="@+id/spinnerLoading"
+                android:indeterminate="true"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:visibility="@{mediaViewModel.isLoading}"
+                android:layout_gravity="center"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="@{mediaViewModel.showEmpty}"
+                android:text="@string/media_no_results"/>
+    </FrameLayout>
+</layout>

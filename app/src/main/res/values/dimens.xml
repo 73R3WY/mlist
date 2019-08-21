@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="componentMargin">12dp</dimen>
+    <dimen name="cardCornerRadius">1dp</dimen>
+    <dimen name="cardElevation">4dp</dimen>
+</resources>

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MList</string>
+    <string name="track_name">Track Name</string>
+    <string name="price">Price</string>
+    <string name="genre">Genre</string>
+    <string name="media_no_results">No media found.</string>
+    <string name="view_last_visited_on">Your last visit to this screen was on %s.</string>
+    <string name="view_last_visited_timestamp_format">E MMMM d, YYYY hh:mm:ss a</string>
+    <string name="media_search_base_url">https://itunes.apple.com</string>
+    <string name="media_search_full_parameters">https://itunes.apple.com/search?term=star&amp;country=au&amp;media=movie&amp;all</string>
 </resources>
