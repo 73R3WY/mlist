@@ -18,8 +18,9 @@ fun Context.isNetworkConnected(): Boolean {
 }
 
 fun Context.getLastViewedTimestamp(): String {
-    return SimpleDateFormat(
+    val lastVisitedTimestamp = SimpleDateFormat(
         getString(R.string.view_last_visited_timestamp_format),
         Locale.getDefault()
     ).format(Date())
+    return String.format(getString(R.string.view_last_visited_on), lastVisitedTimestamp)
 }

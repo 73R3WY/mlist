@@ -1,5 +1,6 @@
 package jeremypacabis.mlist.views.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
@@ -9,6 +10,7 @@ import jeremypacabis.mlist.MList
 import jeremypacabis.mlist.R
 import jeremypacabis.mlist.databinding.ActivityMainBinding
 import jeremypacabis.mlist.models.responses.MediaItem
+import jeremypacabis.mlist.utils.INTENT_KEY_MEDIA_ID
 import jeremypacabis.mlist.utils.Logger
 import jeremypacabis.mlist.utils.getLastViewedTimestamp
 import jeremypacabis.mlist.utils.isNetworkConnected
@@ -33,9 +35,7 @@ class MainActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         mediaViewModel.lastVisitText.value = MList.lastVisitTimestampText
-        val lastVisitedTimestamp = context.getLastViewedTimestamp()
-
-        MList.lastVisitTimestampText = String.format(getString(R.string.view_last_visited_on), lastVisitedTimestamp)
+        MList.lastVisitTimestampText = context.getLastViewedTimestamp()
         Logger.d { "MainActivity onResume..." }
     }
 
@@ -43,6 +43,7 @@ class MainActivity : BaseActivity() {
         val activityBinding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         mediaViewModel = ViewModelProviders.of(this).get(MediaListViewModel::class.java)
         activityBinding.mediaViewModel = mediaViewModel
+        activityBinding.lifecycleOwner = this
     }
 
     private fun initializeData() {
@@ -60,13 +61,21 @@ class MainActivity : BaseActivity() {
                 }
             }
         )
+        mediaViewModel.lastVisitText.observeForever { lastVisitText ->
+            mediaViewModel.showLastVisitText.set(View.GONE.takeIf {
+                lastVisitText.isNullOrBlank()
+            } ?: View.VISIBLE)
+        }
     }
 
     private fun initializeListeners() {
+        val openMediaDetails = Intent(context, MediaDetailActivity::class.java)
         mediaViewModel.mediaItemClicked.observe(
             this,
             Observer<MediaItem> { mediaItem ->
-                Logger.e { "Clicked Item... Track Name: ${mediaItem.trackName}" }
+                Logger.d { "Clicked Item... Track Name: ${mediaItem.trackName}" }
+                openMediaDetails.putExtra(INTENT_KEY_MEDIA_ID, mediaItem.mediaId)
+                startActivity(openMediaDetails)
             }
         )
     }

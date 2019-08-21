@@ -136,7 +136,7 @@ data class MediaItem(
     val shortDescription: String? = null,
 
     @ColumnInfo(name = "lastViewedTimeStamp")
-    val lastViewedTimestamp: String? = null,
+    var lastViewedTimestamp: String? = null,
 
     @PrimaryKey(autoGenerate = false)
     var id: String = ""

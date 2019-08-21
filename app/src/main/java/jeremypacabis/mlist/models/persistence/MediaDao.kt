@@ -21,6 +21,9 @@ interface MediaDao {
     @Query("SELECT * FROM media_table WHERE id = :mediaId")
     fun getLocalMediaWithId(mediaId: String): Maybe<MediaItem?>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Query("UPDATE media_table SET lastViewedTimeStamp = :lastVisitText WHERE id = :mediaId")
+    fun updateLastVisitText(mediaId: String, lastVisitText: String)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addLocalMedia(mediaItem: MediaItem)
 }

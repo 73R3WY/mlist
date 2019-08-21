@@ -3,6 +3,7 @@
     <string name="track_name">Track Name</string>
     <string name="price">Price</string>
     <string name="genre">Genre</string>
+    <string name="long_description">Long Description</string>
     <string name="media_no_results">No media found.</string>
     <string name="view_last_visited_on">Your last visit to this screen was on %s.</string>
     <string name="view_last_visited_timestamp_format">E MMMM d, YYYY hh:mm:ss a</string>

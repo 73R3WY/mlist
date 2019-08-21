@@ -29,8 +29,7 @@ class MediaListViewModel : BaseViewModel() {
     val lastVisitText: MutableLiveData<String> = MutableLiveData()
     var isLoading: ObservableInt = ObservableInt(View.GONE)
     var showEmpty: ObservableInt = ObservableInt(View.GONE)
-    val showLastVisitText: ObservableInt
-        get() = ObservableInt(View.GONE).takeIf { lastVisitText.value.isNullOrBlank() } ?: ObservableInt(View.VISIBLE)
+    val showLastVisitText: ObservableInt = ObservableInt(View.GONE)
     var mediaList: List<MediaItem?> = ArrayList()
         set(value) {
             mediaItemAdapter.mediaList = value
@@ -76,7 +75,7 @@ class MediaListViewModel : BaseViewModel() {
 
     private fun fetchLocalData() {
         disposable.add(
-            MList.mediaDatabase!!.mediaDao().getAllLocalMedia()
+            MList.mediaDatabase.mediaDao().getAllLocalMedia()
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -84,9 +83,9 @@ class MediaListViewModel : BaseViewModel() {
         )
     }
 
-    private fun addMediaToLocalDb(mediaItem: MediaItem) {
+    fun addMediaToLocalDb(mediaItem: MediaItem) {
         Completable.fromAction {
-            MList.mediaDatabase!!.mediaDao().addLocalMedia(mediaItem.generateId())
+            MList.mediaDatabase.mediaDao().addLocalMedia(mediaItem.generateId())
         }
             .subscribeOn(Schedulers.io())
             .unsubscribeOn(Schedulers.io())
